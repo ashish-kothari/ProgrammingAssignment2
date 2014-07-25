@@ -1,34 +1,28 @@
-## Put comments here that give an overall description of what your
-## functions do
+## R script to compute the inverse of a square matrix using caching
 
-## Write a short comment describing this function
-
+##Function to create 'special' matrix for Matrix inverse
 makeCacheMatrix <- function(x = matrix()) {
-    invMatrix <- NULL
-    set <- function(y) {
-        x <<- y
-        invMatrix <<- NULL
-    }
+    invMatrix <- NULL                           ## 'special' matrix 
     get <- function() x
     setinv <- function(inv) invMatrix <<- inv
     getinv <- function() invMatrix
-    list(set = set, get = get,
+    list(get = get,
          setinv = setinv,
-         getinv = getinv)
+         getinv = getinv)                   
 }
 
 
-## Write a short comment describing this function
+## Function to return the inverse of a square matrix, computes value if 
+## no cached version exists
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
     invMatrix <- x$getinv()
-    if(!is.null(invMatrix)) {
+    if(!is.null(invMatrix)) {               ## checks if a cached value exists
         message("getting cached data")
         return(invMatrix)
     }
     data <- x$get()
-    invMatrix <- solve(data, ...)
+    invMatrix <- solve(data, ...)           ## calculates inverse of the matrix
     x$setinv(invMatrix)
-    invMatrix
+    invMatrix                       ## Returns a matrix that is the inverse of 'x'
 }
